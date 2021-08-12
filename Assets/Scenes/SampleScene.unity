@@ -309,7 +309,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 963194225}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96a246c664585bb42a05b0ea28ff7504, type: 3}
+  m_Script: {fileID: 11500000, guid: 541a5453bd0b7514d9afddf8b3427c4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  videoPath: https://brandxr-videos.s3.us-east-2.amazonaws.com/DarkOcean.mp4
+  videoPath: 

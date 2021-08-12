@@ -9,8 +9,6 @@ using UnityEngine.Video;
 
 public class ContentVideo : MonoBehaviour
 {
-    public string videoPath = "";
-
     private WaitForSeconds waitForTenthOfASecond = new WaitForSeconds(0.1f);
 
     private VideoPlayer unityVideoPlayer;
@@ -53,30 +51,24 @@ public class ContentVideo : MonoBehaviour
 
         unityVideoPlayer.isLooping = true;
 
-        SetVideoUrl(videoPath);
+        unityVideoPlayer.url = "https://brandxr-discovery.s3.amazonaws.com/HotspotDemoVideos/OrigamiBullHowToMakeAPaperBull!(StephanWeber).mp4";
 
     } //END CreateUnityVideoPlayer
 
     //-------------------------------------------//
-    public void SetVideoUrl(string url)
+    public void SetVideoUrl()
     //-------------------------------------------//
     {
-        videoPath = url;
-
-        unityVideoPlayer.url = videoPath;
 
 #if !UNITY_EDITOR && UNITY_WEBGL
 
         // If we are in a mobile IOS webgl build 
-        if (PlatformHelper.IsiOS() == true)
+      /*  if (PlatformHelper.IsiOS() == true)
         {
             IOSWebPlaybackHelper.Instance.AddToVideoList(gameObject.name);
 
-            if(isHotspotVideo == true)
-            {
-                IOSWebPlaybackHelper.Instance.ShowHtmlButton();
-            }
-        }
+            IOSWebPlaybackHelper.Instance.ShowHtmlButton();
+        }*/
 #endif
 
     } // END SetVideoUrl
