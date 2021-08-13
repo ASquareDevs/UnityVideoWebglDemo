@@ -30,12 +30,12 @@ public class ContentVideo : MonoBehaviour
         unityVideoPlayer.renderMode = VideoRenderMode.CameraNearPlane;
 
 #if !UNITY_EDITOR && UNITY_WEBGL
-        if (PlatformHelper.IsiOS() == true)
+       /* if (PlatformHelper.IsiOS() == true)
         {
             // Webgl on mobile IOS devices will not auto play because safari wants play to be called with user intent so from an HTML button 
             unityVideoPlayer.waitForFirstFrame = false;
             unityVideoPlayer.playOnAwake = false;
-        }
+        }*/
             
         // WEBGL Requires you to use Direct audio type
         unityVideoPlayer.audioOutputMode = VideoAudioOutputMode.Direct;

@@ -1,0 +1,17 @@
+Webgl Build Tips
+- When you build a webgl project from unity you have to upload the build files includes(Build, TemplateData, index.html) to a server
+
+- We use amazon aws
+
+- Once uploaded in the server inside the Build folder we select the .data.br file and edit the metadata, System defined - Content-Encoding = br
+System defined - Content-Type = binary/octet-stream
+
+- Then select the .framework.js.br and edit the metadata,
+System defined - Content-Encoding = br
+System defined - Content-Type = application/javascript
+
+- Then select the .wasm.br and edit the metadata,
+System defined - Content-Encoding = br
+System defined - Content-Type = application/wasm
+
+- You then should be able to open the project by going to the index link
