@@ -7,9 +7,23 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Video;
 
+#if UNITY_WEBGL && !UNITY_EDITOR
+using AOT;
+using System.Runtime.InteropServices;
+#endif
+
 public class ContentVideo : MonoBehaviour
 {
-    private WaitForSeconds waitForTenthOfASecond = new WaitForSeconds(0.1f);
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+    [DllImport( "__Internal" )]
+    private static extern bool CheckForWebGLIOS();
+#else
+    private static bool CheckForWebGLIOS()
+    {
+        return false;
+    }
+#endif
 
     private VideoPlayer unityVideoPlayer;
     private AudioSource audioSource;
@@ -25,17 +39,20 @@ public class ContentVideo : MonoBehaviour
     //---------------------------------------//
     public void CreateUnityVideoPlayer()
     //---------------------------------------//
-    { 
+    {
         unityVideoPlayer = Camera.main.gameObject.AddComponent<VideoPlayer>();
         unityVideoPlayer.renderMode = VideoRenderMode.CameraNearPlane;
 
 #if !UNITY_EDITOR && UNITY_WEBGL
-       /* if (PlatformHelper.IsiOS() == true)
+
+        Debug.Log("ContentVideo//CreateUnityVideoPlayer// CheckForWebGLIOS() " + CheckForWebGLIOS());
+
+        if (CheckForWebGLIOS() == true)
         {
             // Webgl on mobile IOS devices will not auto play because safari wants play to be called with user intent so from an HTML button 
             unityVideoPlayer.waitForFirstFrame = false;
             unityVideoPlayer.playOnAwake = false;
-        }*/
+        }
             
         // WEBGL Requires you to use Direct audio type
         unityVideoPlayer.audioOutputMode = VideoAudioOutputMode.Direct;
@@ -51,27 +68,36 @@ public class ContentVideo : MonoBehaviour
 
         unityVideoPlayer.isLooping = true;
 
-        unityVideoPlayer.url = "https://brandxr-discovery.s3.amazonaws.com/HotspotDemoVideos/OrigamiBullHowToMakeAPaperBull!(StephanWeber).mp4";
+        SetVideoUrl("https://brandxr-discovery.s3.amazonaws.com/HotspotDemoVideos/OrigamiBullHowToMakeAPaperBull!(StephanWeber).mp4");
 
     } //END CreateUnityVideoPlayer
 
     //-------------------------------------------//
-    public void SetVideoUrl()
+    public void SetVideoUrl(string url)
     //-------------------------------------------//
     {
+        unityVideoPlayer.url = url;
 
 #if !UNITY_EDITOR && UNITY_WEBGL
 
         // If we are in a mobile IOS webgl build 
-      /*  if (PlatformHelper.IsiOS() == true)
+        if (CheckForWebGLIOS() == true)
         {
             IOSWebPlaybackHelper.Instance.AddToVideoList(gameObject.name);
 
             IOSWebPlaybackHelper.Instance.ShowHtmlButton();
-        }*/
+        }
 #endif
 
     } // END SetVideoUrl
+
+    //-------------------------------------------//
+    public void Play()
+    //-------------------------------------------//
+    {
+        unityVideoPlayer.Play();
+
+    } // END Play
 
     //-------------------------------------------//
     public void ToggleAudio()
@@ -157,4 +183,3 @@ public class ContentVideo : MonoBehaviour
     } //END SetVolume
 
 } //END class
-

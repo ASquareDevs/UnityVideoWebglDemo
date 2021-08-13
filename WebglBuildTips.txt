@@ -1,9 +1,55 @@
+
+********************************************************************************************************
+
 Webgl Build Tips
-- When you build a webgl project from unity you have to upload the build files includes(Build, TemplateData, index.html) to a server
 
-- We use amazon aws
+********************************************************************************************************
 
-- Once uploaded in the server inside the Build folder we select the .data.br file and edit the metadata, System defined - Content-Encoding = br
+=============================================================================================================================================================================================
+1.) For Webgl iOS a small change has to be made to unity's Video.js file found at this path (Make sure the unity version has WebGL support)
+    C:\Program Files\Unity\Hub\Editor\2021.1.1f1\Editor\Data\PlaybackEngines\WebGLSupport\BuildTools\lib\Video.js
+  
+  	A.) Any place the html video component is created we need to set the atribute playsinline to prevent it from fullscreening the video it is created twice in this file
+  		
+		var video = document.createElement('video');
+  		video.setAttribute('playsinline', 'playsinline'); 
+
+=============================================================================================================================================================================================
+
+2.) After building you will have to make a change to the index.html to make the unity instance is global so our other methods can asccess it 
+
+      var script = document.createElement("script");
+      script.src = loaderUrl;
+      script.onload = () => {
+        createUnityInstance(canvas, config, (progress) => {
+          progressBarFull.style.width = 100 * progress + "%";
+        }).then((unityInstance) => {
+
+	  window.unityInstance = unityInstance;     <----- Add here
+          
+	  loadingBar.style.display = "none";
+          fullscreenButton.onclick = () => {
+            unityInstance.SetFullscreen(1);
+          };
+        }).catch((message) => {
+          alert(message);
+        });
+      }; 
+
+=============================================================================================================================================================================================	
+				
+3.) When you build a webgl project from unity you have to upload the build files includes(Build, TemplateData, index.html) to a server
+
+=============================================================================================================================================================================================	
+
+Specific to AWS Amazon Server 
+
+=============================================================================================================================================================================================	
+
+- Need to use a private server to play the WebGL build (we personally use AWS)
+
+- Once uploaded in the server inside the Build folder we select the .data.br file and edit the metadata, 
+System defined - Content-Encoding = br
 System defined - Content-Type = binary/octet-stream
 
 - Then select the .framework.js.br and edit the metadata,
