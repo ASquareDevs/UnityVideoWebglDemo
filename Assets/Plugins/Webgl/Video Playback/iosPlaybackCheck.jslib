@@ -14,6 +14,7 @@ HTMLVideoSolution: function(objectNames)
   {	  		
 	alert("Tap the screen to play the video");
 	
+	// Take the object names and split it into a list
 	var videoPlayerNames = Pointer_stringify( objectNames );	
 	var videoPlayerArray = videoPlayerNames.split(',');
 	
@@ -35,7 +36,7 @@ HTMLVideoSolution: function(objectNames)
 		{
 			for(var i = 0; i < videoPlayerArray.length; i++)
 			{
-				// Call Unity function
+				// Call Unity function for all video players in array
 				window.unityInstance.SendMessage( videoPlayerArray[i], 'Play' );
 			}
 		}

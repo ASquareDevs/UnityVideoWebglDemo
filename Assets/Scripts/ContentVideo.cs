@@ -44,9 +44,6 @@ public class ContentVideo : MonoBehaviour
         unityVideoPlayer.renderMode = VideoRenderMode.CameraNearPlane;
 
 #if !UNITY_EDITOR && UNITY_WEBGL
-
-        Debug.Log("ContentVideo//CreateUnityVideoPlayer// CheckForWebGLIOS() " + CheckForWebGLIOS());
-
         if (CheckForWebGLIOS() == true)
         {
             // Webgl on mobile IOS devices will not auto play because safari wants play to be called with user intent so from an HTML button 
@@ -83,8 +80,12 @@ public class ContentVideo : MonoBehaviour
         // If we are in a mobile IOS webgl build 
         if (CheckForWebGLIOS() == true)
         {
+            // We have to use unityInstance.SendMessage to call play from an html button which requieres the name of the gameobject and the method. The method being Play
+            // We use a list of video player names so we can call play on multiple players if we want 
+            // Add all the names you want then we show the html button 
             IOSWebPlaybackHelper.Instance.AddToVideoList(gameObject.name);
 
+            // The html button should be a grey overlay when you press it the it calls play with unityInstance.SendMessage satisfying the requirment of user intent 
             IOSWebPlaybackHelper.Instance.ShowHtmlButton();
         }
 #endif

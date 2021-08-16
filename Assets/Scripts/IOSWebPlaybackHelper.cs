@@ -44,7 +44,7 @@ public class IOSWebPlaybackHelper : MonoBehaviour
 
 #if UNITY_WEBGL && !UNITY_EDITOR
     [DllImport("__Internal")]
-    private static extern void HTMLVideoSolution(string objectName);
+    private static extern void HTMLVideoSolution(string objectName);                    // Calls iOSPlaybackCheck.jslib to create html button 
 #else
 #pragma warning disable IDE0060 // Remove unused parameter
     private void HTMLVideoSolution(string objectName) { }
